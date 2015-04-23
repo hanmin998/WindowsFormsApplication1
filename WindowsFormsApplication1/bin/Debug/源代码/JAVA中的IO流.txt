@@ -1,0 +1,30 @@
+public class iotEST {
+	public static void main(String[] args) throws Exception {				DataInputStream din=null;
+		try{
+			din=new DataInputStream(new BufferedInputStream(new FileInputStream("IOTest.txt")));
+			byte bs[]=new byte[din.available()];							din.read(bs);
+			String content=new String(bs);								System.out.println("ÎÄ¼þÄÚÈÝ==="+content);
+		}finally{
+			din.close();
+		}
+	}
+public class EncryptOutputStream extends OutputStream{
+        private OutputStream os=null;
+	public EncryptOutputStream£¨OutputStream os){
+		this.os=os;
+	}
+	public void write(int a) throws IOException{
+		a=a+2;
+		if(a>=(97+26)){
+			a=a-26;
+		}
+		this.os.write(a);
+	}
+}
+ public class iotEST{
+	public static void main(String[] args) throws Exception{
+		DataOutputStream dout=new DataOutputStream(new BufferedOutputStream( new EncryptOutputStream(new FileOutputStream("IOTest.txt"))));
+		dout.write("abcdxyz".getBytes());
+		dout.close();
+	}
+}

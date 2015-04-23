@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Fund jijin = new Fund();  //此时用户不需要了解股票，甚至可以对股票一无所知，买了基金就回家睡觉，一段时间在赎回就可以大把数钱。参与股票的具体买卖都由基金公司完成。
+            //基金购买
+            jijin.BuyFund();
+            //基金赎回
+            jijin.SellFund();
+            Console.Read();
+        }
+    }
+    class Stock1
+    {
+        //卖股票
+        public void Sell()
+        {
+            Console.WriteLine("股票1卖出");
+        }
+        //买股票
+        public void Buy()
+        {
+            Console.WriteLine("股票1买入");
+        }
+    }
+    class Stock2
+    {
+        //卖股票
+        public void Sell()
+        {
+            Console.WriteLine("股票2卖出");
+        }
+        //买股票
+        public void Buy()
+        {
+            Console.WriteLine("股票2买入");
+        }
+    }
+    class Stock3
+    {
+        //卖股票
+        public void Sell()
+        {
+            Console.WriteLine("股票3卖出");
+        }
+        //买股票
+        public void Buy()
+        {
+            Console.WriteLine("股票3买入");
+        }
+    }
+    class NationalDebt1
+    {
+        //卖国债
+        public void Sell()
+        {
+            Console.WriteLine("国债1卖出");
+        }
+        //买国债
+        public void Buy()
+        {
+            Console.WriteLine("国债1买入");
+        }
+    }
+    class Realty1
+    {
+        //卖房地产
+        public void Sell()
+        {
+            Console.WriteLine("房地产1卖出");
+        }
+        //买房地产
+        public void Buy()
+        {
+            Console.WriteLine("房地产1买入");
+        }
+    }
+    class Fund {  //基金类，它需要了解所有的股票或其他投资方式的方法或属性，进行组合，以备外界调用；
+        Stock1 gu1;
+        Stock2 gu2;
+        Stock3 gu3;
+        NationalDebt1 nd1;
+        Realty1 rt1;
+        public Fund() {
+            gu1 = new Stock1();
+            gu2 = new Stock2();
+            gu3 = new Stock3();
+            nd1 = new NationalDebt1();
+            rt1 = new Realty1();
+        }
+        public void BuyFund() {
+            gu1.Buy();
+            gu2.Buy();
+            gu3.Buy();
+            nd1.Buy();
+            rt1.Buy();
+        }
+        public void SellFund() {
+            gu1.Sell();
+            gu2.Sell();
+            gu3.Sell();
+            nd1.Sell();
+            rt1.Sell();
+        }
+    }
+}

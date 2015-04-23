@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int extrinsicstate = 22;
+            FlyweightFactory f = new FlyweightFactory();
+            FlyWeight fx = f.GetFlyweight("X");
+            fx.Operation(--extrinsicstate);
+            FlyWeight fy = f.GetFlyweight("Y");
+            fx.Operation(--extrinsicstate);
+            FlyWeight fz = f.GetFlyweight("Z");
+            fx.Operation(--extrinsicstate);
+            FlyWeight uf = new UsharedConcreteFlyweight();
+            uf.Operation(--extrinsicstate);
+            Console.Read();
+        }
+    }
+    abstract class FlyWeight {
+        public abstract void Operation(int extrinsicstate);
+    }
+    class ConcreteFlyweight : FlyWeight {
+        public override void Operation(int extrinsicstate)
+        {
+            Console.WriteLine("具体Flyweight:"+extrinsicstate);
+        }
+    }
+    class UsharedConcreteFlyweight : FlyWeight
+    {
+        public override void Operation(int extrinsicstate)
+        {
+            Console.WriteLine("不共享的具体Flyweight:" + extrinsicstate);
+        }
+    }
+    class FlyweightFactory {
+        private Hashtable flyweghts = new Hashtable();
+        public FlyweightFactory() {
+            flyweghts.Add("X", new ConcreteFlyweight());
+            flyweghts.Add("Y", new ConcreteFlyweight());
+            flyweghts.Add("Z", new ConcreteFlyweight());
+        }
+        public FlyWeight GetFlyweight(string key) {
+            return ((FlyWeight)flyweghts[key]);
+        }
+    }
+}

@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Reciever r = new Reciever();
+            Command c = new ConcreteCommand(r);
+            Invoker i = new Invoker();
+            i.SetCommand(c);
+            i.ExecuteCommand();
+            Console.Read();
+        }
+    }
+    class Reciever{
+        public void Action(){
+            Console.WriteLine("÷¥––«Î«Û");
+        }
+    }
+    abstract class Command {
+        protected Reciever reciever;
+        public Command(Reciever reciever) {
+            this.reciever = reciever;
+        }
+        abstract public void Execute();
+    }
+    class ConcreteCommand : Command {
+        public ConcreteCommand(Reciever reciever) : base(reciever) { }
+        public override void Execute()
+        {
+            reciever.Action();
+        }
+    }
+    class Invoker {
+        private Command command;
+        public void SetCommand(Command command) {
+            this.command = command;
+        }
+        public void ExecuteCommand() {
+            command.Execute();
+        }
+    }
+}

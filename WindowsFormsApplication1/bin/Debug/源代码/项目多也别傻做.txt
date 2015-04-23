@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            WebSiteFactory f = new WebSiteFactory();
+            WebSite fx = f.GetWebSiteCategory("产品展示");
+            fx.Use();
+            WebSite fy = f.GetWebSiteCategory("产品展示");
+            fy.Use();
+            WebSite fz = f.GetWebSiteCategory("产品展示");
+            fz.Use();
+            WebSite f1 = f.GetWebSiteCategory("博客");
+            f1.Use();
+            WebSite f2 = f.GetWebSiteCategory("博客");
+            f2.Use();
+            Console.WriteLine("网站分类总数：{0}",f.GetWebSiteCount());
+            Console.Read();
+        }
+    }
+    abstract class WebSite {
+        public abstract void Use();
+    }
+    class ConcreteWebSite : WebSite {
+        private string name = "";
+        public ConcreteWebSite(string name) {
+            this.name = name;
+        }
+        public override void Use()
+        {
+            Console.WriteLine("网站分类:"+name);
+        }
+    }
+    class WebSiteFactory {
+        private Hashtable flyweights = new Hashtable();
+        public WebSite GetWebSiteCategory(string key) {
+            if (!flyweights.ContainsKey(key))
+                flyweights.Add(key, new ConcreteWebSite(key));
+            return ((WebSite)flyweights[key]);
+        }
+        public int GetWebSiteCount() {
+            return flyweights.Count;
+        }
+    }
+}

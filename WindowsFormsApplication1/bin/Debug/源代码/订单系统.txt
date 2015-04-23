@@ -1,0 +1,102 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+		OrderApi order=new OrderProxy(new Order("设计模式",100,"张三"));			order.setOrderNum(123, "李四");
+		Console.WriteLine("李四修改后订单记录没有变化："+order);		       		order.setOrderNum(123, "张三");		                		Console.WriteLine("张三修改后，订单记录："+order);
+		Console.Read();
+	}
+    }
+    interface OrderApi
+    {
+         string getProductName();
+         void setProductName(string productName, string user);
+         int getOrderNum();
+         void setOrderNum(int orderNum, string user);
+         string getOrderUser();
+         void setOrderUser(string orderUser, string user);
+
+    }
+    public class Order : OrderApi
+    {
+        private string productName;
+        private int orderNum;
+        private string orderUser;
+        public Order(string productName, int orderNum, string orderUser)
+        {
+            this.productName = productName;
+            this.orderNum = orderNum;
+            this.orderUser = orderUser;
+        }
+        public int getOrderNum()
+        {
+            return orderNum;
+
+        }
+        public string getOrderUser()
+        {
+            return orderUser;
+        }
+        public string getProductName()
+        {
+            return productName;
+        }
+        public void setOrderNum(int orderNum, string user)
+        {
+            this.orderNum = orderNum;
+        }
+        public void setOrderUser(string orderUser, string user)
+        {
+            this.orderUser = orderUser;
+
+        }
+        public void setProductName(string productName, string user)
+        {
+            this.productName = productName;
+        }
+    }
+    public class OrderProxy:OrderApi{	private Order order=null;
+	public OrderProxy(Order real){
+		this.order=real;
+	}
+	public int getOrderNum(){
+		return this.order.getOrderNum();
+	}
+	public string getOrderUser(){
+		return this.order.getOrderUser();
+	}
+	public string getProductName(){
+		return this.order.getProductName();
+	}
+	public void setOrderNum(int orderNum, string user){
+		if(user!=null && user.Equals(this.getOrderUser())){						order.setOrderNum(orderNum, user);
+		}else{
+			Console.WriteLine("对不起"+user+"，您无权修改订单中的订购数量");	
+	}
+}
+    	public void setOrderUser(string orderUser, string user){
+		if(user!=null && user.Equals(this.getOrderUser())){						order.setOrderUser(orderUser, user);
+		}else{
+			Console.WriteLine("对不起"+user+"，您无权修改订单中的订购人");			}
+	}
+
+        public void setProductName(string productName,string user){
+		if(user!=null && user.Equals(this.getOrderUser()){
+			order.setProductName(productName, user);
+		}else{
+			Console.WriteLine("对不起"+user+"，您无权修改订单中的产品名称");
+		}
+}
+
+	public string toString(){
+        return "ProductName=" + this.getProductName() + ",orderNum="+this.getOrderNum() + ",orderUser=" + this.getOrderUser();
+    }
+    }
+}

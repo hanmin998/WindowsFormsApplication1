@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ExportOperate operate = new ExportDBOperate();
+            operate.export("测试数据");
+            Console.Read();
+        }
+    }
+    interface ExportFileApi
+    {
+	bool export(string data);
+    }
+    public class ExportDB:ExportFileApi{
+	public bool export(String data){
+	    Console.WriteLine("导出数据"+data+"到数据库备份文件");
+	    return true;
+	}
+    } 
+    public class ExportTxtFile:ExportFileApi{
+	public bool export(string data){
+	    Console.WriteLine("导出数据"+data+"到文本文件");
+	    return true;
+	}
+    }
+    public abstract class ExportOperate
+    {
+	public bool export(string data)
+	{
+	    ExportFileApi api = factoryMethod();
+	    return api.export(data);
+ 	}
+	protected abstract ExportFileApi factoryMethod();
+    } 
+    public class ExportDBOperate:ExportOperate{
+	protected ExportFileApi factoryMethod(){
+	    return new ExportDB();
+	}
+    }
+    public class ExportTxtFileOperate:ExportOperate{
+	protected ExportFileApi factoryMethod(){
+	    return new ExportTxtFile();
+	}
+    }
+}

@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Barbecuer boy = new Barbecuer();
+            Command bakeMuttonCommand1 = new BakeMuttonCommand(boy);
+            Command bakeMuttonCommand2 = new BakeMuttonCommand(boy);
+            Command bakeChickenWingCommand1 = new BakeChickenWingCommand(boy);
+            Waiter girl = new Waiter();
+            girl.SetOrder(bakeMuttonCommand1);
+            girl.SetOrder(bakeMuttonCommand2);
+            girl.SetOrder(bakeChickenWingCommand1);
+            girl.Notify();
+            Console.Read();
+        }
+    }
+    public class Barbecuer{
+        public void BakeMutton(){
+            Console.WriteLine("烤羊肉串！");
+        }
+        public void BakeChickenWing(){
+            Console.WriteLine("烤鸡翅！");
+        }
+    }
+    public abstract class Command {
+        protected Barbecuer receiver;
+        public Command(Barbecuer receiver) {
+            this.receiver = receiver;
+        }
+        abstract public void ExcuteCommand();
+    }
+    class BakeMuttonCommand : Command {
+        public BakeMuttonCommand(Barbecuer receiver) : base(receiver) { }
+        public override void ExcuteCommand()
+        {
+            receiver.BakeMutton();
+        }
+    }
+    class BakeChickenWingCommand : Command {
+        public BakeChickenWingCommand(Barbecuer receiver) : base(receiver) { }
+        public override void ExcuteCommand()
+        {
+            receiver.BakeChickenWing();
+        }
+    }
+    public class Waiter
+    {
+        private IList<Command> orders = new List<Command>();
+        public void SetOrder(Command command)
+        {
+            if (command.ToString() == "命令模式.BakeChickenWingCommand")
+            {
+                Console.WriteLine("服务员：鸡翅没有了，请点别的烧烤。");
+            }
+            else
+            {
+                orders.Add(command);
+                Console.WriteLine("增加订单：" + command.ToString());
+            }
+        }
+        public void CancelOrder(Command command) {
+            orders.Remove(command);
+            Console.WriteLine("取消订单："+command.ToString());
+        }
+        public void Notify() {
+            foreach (Command cmd in orders) {
+                cmd.ExcuteCommand();
+            }
+        }
+    }
+}

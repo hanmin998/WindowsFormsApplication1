@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Context c = new Context(new ConcreteStateA());
+            c.Request();
+            c.Request();
+            c.Request();
+            c.Request();
+            Console.Read();
+        }
+    }
+    //抽象状态类
+    abstract class State {
+        public abstract void Handle(Context context);
+    }
+    //具体状态
+    class ConcreteStateA : State {
+        public override void Handle(Context context)
+        {
+            context.State = new ConcreteStateB();
+        }
+    }
+    class ConcreteStateB : State {
+        public override void Handle(Context context)
+        {
+            context.State = new ConcreteStateA();
+        }
+    }
+    class Context {
+        private State state;
+        public Context(State state) {
+            this.state = state;
+        }
+        public State State {
+            get { return state; }
+            set { state = value; Console.WriteLine("当前状态：" + state.GetType().Name); }
+        }
+        public void Request() {
+            state.Handle(this);
+        }
+    }
+}

@@ -1,0 +1,37 @@
+abstract class AbstractClass{
+    //Methods
+    abstract public void PrimitiveOperation1();
+    abstract public void PrimitiveOperation2();
+    // The Template method
+     public void TemplateMethod() {
+         Console.WriteLine(" ");
+         PrimitiveOperation1();
+         PrimitiveOperation2();
+    }
+}
+// "ConcreteClass" 
+class ConcreteClassA:AbstractClass { 
+    // Methods
+    public override void PrimitiveOperation1(){ 
+        Console.WriteLine("具体类A方法1实现");
+    } 
+    public override void PrimitiveOperation2() {
+        Console.WriteLine("具体类A方法2实现"); 
+    } 
+} 
+class ConcreteClassB:AbstractClass { 
+    // Methods
+    public override void PrimitiveOperation1(){ 
+        Console.WriteLine("具体类B方法1实现");
+    } 
+    public override void PrimitiveOperation2() {
+        Console.WriteLine("具体类B方法2实现"); 
+    } 
+} 
+public class Client{
+    public static void Main( string[] args)   { 
+       //Create instance and call template method
+       AbstractClass c = new ConcreteClass();
+       c.TemplateMethod();
+   }
+}

@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Target target = new Adapter();
+            target.Request();
+            Console.Read();
+        }
+    }
+    //客户所期待的接口
+    class Target {
+        public virtual void Request() {
+            Console.WriteLine("普通请求！");
+        }
+    }
+    //需要适配的类
+    class Adaptee {
+        public void SepcificRequest() {
+            Console.WriteLine("特殊请求");
+        }
+    }
+    //在内部包装一个Adaptee对象，把原接口转换成目标接口
+    class Adapter : Target {
+        private Adaptee adaptee = new Adaptee();
+        public override void Request()
+        {
+            adaptee.SepcificRequest();
+        }
+    }
+}

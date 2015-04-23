@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Context context;
+            context = new Context(new ConcreteStrategyA());
+            context.ContextInterface();
+            context = new Context(new ConcreteStrategyB());
+            context.ContextInterface();
+            context = new Context(new ConcreteStrategyC());
+            context.ContextInterface();
+            Console.Read();
+        }
+    }
+    abstract class Strategy {
+        public abstract void AlgorithmInterface();
+    }
+    class ConcreteStrategyA : Strategy {
+        public override void AlgorithmInterface()
+        {
+            Console.WriteLine("算法A的实现");
+        }
+    }
+    class ConcreteStrategyB : Strategy
+    {
+        public override void AlgorithmInterface()
+        {
+            Console.WriteLine("算法B的实现");
+        }
+    }
+    class ConcreteStrategyC : Strategy
+    {
+        public override void AlgorithmInterface()
+        {
+            Console.WriteLine("算法C的实现");
+        }
+    }
+    class Context {
+        Strategy strategy;
+        public Context(Strategy strategy) {
+            this.strategy = strategy;
+        }
+        public void ContextInterface() {
+            strategy.AlgorithmInterface();
+        }
+    }
+}

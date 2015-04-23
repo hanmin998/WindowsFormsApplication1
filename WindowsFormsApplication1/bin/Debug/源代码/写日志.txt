@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Reflection;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+	    LogContext log = new LogContext();
+	    log.log("记录日志");
+	    log.log("再次记录日志");
+	    Console.Read();
+	}
+    }
+    public interface LogStrategy{
+	void log(String msg);
+    }
+    public class DbLog:LogStrategy{
+		public void log(String msg) {
+		if(msg!=null &&msg.Trim().Length>5){
+		Console.WriteLine("出错啦！");
+		}
+		Console.WriteLine("现在把'"+msg+"'记录到数据库中");
+	    }
+    }
+    public class FileLog:LogStrategy{
+ 	public void log(String msg){
+		Console.WriteLine("现在把'"+msg+"'记录到文件中");
+	}
+    }
+    public class LogContext
+    {
+	public void log(String msg)
+	{
+	    LogStrategy strategy = new DbLog();
+	    try
+            {
+                strategy.log(msg);
+            }
+            catch (Exception err)
+            {
+                strategy = new FileLog();
+                strategy.log(msg);
+            }
+        }
+    }
+}

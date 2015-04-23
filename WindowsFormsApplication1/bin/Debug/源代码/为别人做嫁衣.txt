@@ -1,0 +1,64 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication1
+{
+    interface IGiveGift{
+    void GiveDolls();
+    void GiveFlowers();
+    void GiveChocolate();
+    }
+  
+    class SchoolGirl {
+        private string name;
+        public string Name {
+            get { return name; }
+            set { name = value; }
+        }
+    }
+    class Pursuit:IGiveGift {
+        SchoolGirl mm;
+        public Pursuit(SchoolGirl mm) {
+            this.mm = mm;
+        }
+        public void GiveDolls() {
+            Console.WriteLine(mm.Name + "ÀÕƒ„œ ª®");
+        }
+        public void GiveFlowers() {
+            Console.WriteLine(mm.Name+"ÀÕƒ„—ÛÕﬁÕﬁ");
+        }
+        public void GiveChocolate() {
+            Console.WriteLine(mm.Name+"ÀÕƒ„«…øÀ¡¶");
+        }
+    }
+    class Proxy : IGiveGift {
+        Pursuit gg;
+        public Proxy(SchoolGirl mm) {
+            gg = new Pursuit(mm);
+        }
+        public void GiveDolls() {
+            gg.GiveDolls();
+        }
+        public void GiveFlowers() {
+            gg.GiveFlowers();
+        }
+        public void GiveChocolate() {
+            gg.GiveChocolate();
+        }
+    }
+      class Program
+    {
+        static void Main(string[] args)
+        {
+            SchoolGirl jiaojiao = new SchoolGirl();
+            jiaojiao.Name = "¿ÓΩøΩø";
+            Proxy daili = new Proxy(jiaojiao);
+            daili.GiveDolls();
+            daili.GiveFlowers();
+            daili.GiveChocolate();
+            Console.Read();
+        }
+    }
+}

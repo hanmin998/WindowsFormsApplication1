@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ConsoleApplication2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConcreteComponent c=new ConcreteComponent();
+            ConcreteDecoratorA d1=new ConcreteDecoratorA();
+            ConcreteDecoratorB d2=new ConcreteDecoratorB();
+            d1.SetComponent(c);
+            d2.SetComponent(d1);
+            d2.Operation();
+            Console.Read();
+        }
+    }
+    //Component类
+    abstract class Component {
+        public abstract void Operation();
+    }
+    //ConcreteComponent类
+    class ConcreteComponent : Component {
+        public override void Operation()
+        {
+            Console.WriteLine("具体对象的操作");
+        }
+    }
+    //Decorator类
+    abstract class Decorator : Component {
+        protected Component component;
+        public void SetComponent(Component component) {
+            this.component = component;
+        }
+        public override void Operation()
+        {
+            if (component != null) {
+                component.Operation();
+            }
+        }
+    }
+    //ConcreteDecorator类
+    class ConcreteDecoratorA : Decorator {
+        private string addedState;//本类独有的功能，以区别于ConcreteDecoratorB
+        public override void Operation()
+        {
+            base.Operation();//首先运行原Component的Operation()，在执行本类的功能，如addState，相当于对原Component进行了装饰
+            addedState = "New State";
+            Console.WriteLine("具体装饰对象A的操作");
+        }
+    }
+    class ConcreteDecoratorB : Decorator
+    {
+        public override void Operation()
+        {
+            base.Operation();//首先运行原Component的Operation()，在执行本类的功能，如AddedBehavior，相当于对原Component进行了装饰
+            AddedBehavior();
+            Console.WriteLine("具体装饰对象A的操作");
+        }
+    }
+    private void AddedBehavior(){
+    //本类独有的方法，以区别于ConcreteDecoratorA
+}
+}
